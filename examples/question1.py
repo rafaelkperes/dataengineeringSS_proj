@@ -28,7 +28,7 @@ df['APPT_START_DATE'] = df['APPT_START_DATE'].apply(pd.datetools.normalize_date)
 print ('Summary:')
 print (df)
 print ('Example data:')
-print (df[175:180])
+print (df[:10])
 
 visit_counts = df['APPT_START_DATE'].value_counts()
 visit_counts[:10].plot()
@@ -43,36 +43,18 @@ has_first_name = df['NAMEFIRST'] == "RAFAEL"
 print ("Number of visits from RAFAEL PERES: ")
 print (len(df[has_last_name & has_first_name]))
 
-name = []
-for dire in range(170,180):
-    print "========"
-#    print df.iloc[dire].NAMELAST
-    if len(str(df.iloc[dire].NAMELAST)) == 0:
-        name.append(str(df.iloc[dire].NAMEFIRST))
-    elif len(str(df.iloc[dire].NAMEFIRST)) == 0:
-        name.append(str(df.iloc[dire].NAMELAST))
-    else:
-        name.append(str(df.iloc[dire].NAMELAST) + " " + str(df.iloc[dire].NAMEFIRST))
 
-print(name)
-
-
-# In[166]:
+# In[168]:
 
 import requests
 import xml.etree.ElementTree as xmlTree
-
 for dire in range(0,500):
-#    print df.iloc[dire].NAMELAST
-    if len(str(df.iloc[dire].NAMELAST)) == 0:
-        name.append(str(df.iloc[dire].NAMEFIRST))
-    elif len(str(df.iloc[dire].NAMEFIRST)) == 0:
-        name.append(str(df.iloc[dire].NAMELAST))
-    else:
-        name.append(str(df.iloc[dire].NAMELAST) + " " + str(df.iloc[dire].NAMEFIRST))
-
-for a in name:
-    artistname = a
+    #if len(str(df.iloc[dire].NAMELAST)) == 0:
+        #name.append(str(df.iloc[dire].NAMEFIRST))
+    #elif len(str(df.iloc[dire].NAMEFIRST)) == 0:
+        #name.append(str(df.iloc[dire].NAMELAST))
+    #else:
+    artistname = str(df.iloc[dire].NAMELAST) + " " + str(df.iloc[dire].NAMEFIRST)
     url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist='               + artistname + '&api_key=b863970e9ba9d8391a162cae75ce422b' #&format=json'
     response = requests.get(url)
     if str(response) == '<Response [200]>':
@@ -82,9 +64,9 @@ for a in name:
         stats = ar.find('stats')
         print 'listners: ' + stats.find('listeners').text
         print 'playcounts: ' + stats.find('playcount').text
-    else:
-        print 'no such musician in lastFM'
-        
+    #else:
+    #    print 'no such musician in lastFM'
+       
 
 
 # In[ ]:
