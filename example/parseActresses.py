@@ -35,9 +35,7 @@ line = actors_file.readline()
 
 while line != "": 
     if re.search(r'^[a-zA-Z0-9\$](.*?)[	]', line): #an actor
-        if a != 0:
-            idActor = idActor + 1
-            
+                 
         name = re.search(r'^(.*?)[	]', line)
         movie = re.search(r'[	][a-zA-Z0-9 ]*',line)
         year = re.search(r'\([0-9?]*\)',line)
@@ -55,6 +53,7 @@ while line != "":
             
         
         actor_movieCSV.write(str(idActor)+'|'+str(idMovie)+'\n')
+        idActor = idActor + 1
         idMovie = idMovie + 1
         
     elif re.search(r'^[a-zA-Z0-9\$](.*?)[	]', line): #a movie from a actor
@@ -65,7 +64,7 @@ while line != "":
                 movieCSV.write(str(idMovie)+'|'+str(movie.group().strip())+'|'+str(year.group())+'\n')
                 
             else:
-                movieCSV.write(str(idMovie)+'|'+str(movie.group().strip())+',null\n')
+                movieCSV.write(str(idMovie)+'|'+str(movie.group().strip())+'|null\n')
                 
                     
             actor_movieCSV.write(str(idActor)+'|'+str(idMovie)+'\n')
